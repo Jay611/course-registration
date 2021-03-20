@@ -6,7 +6,7 @@ export const getStudentReducer = (state = { profile: [] }, action) => {
     case actionTypes.GET_STUDENT_REQUEST:
       return {
         loading: true,
-        profile: []
+        profile: null
       }
     case actionTypes.GET_STUDENT_SUCCESS:
       return {

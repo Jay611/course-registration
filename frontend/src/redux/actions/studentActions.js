@@ -32,7 +32,7 @@ export const logout = () => (dispatch) => {
     .then(() => {
       dispatch({
         type: actionTypes.STUDENT_LOGOUT_SUCCESS,
-        payload: []
+        payload: null
       })
     })
     .catch(err => {
