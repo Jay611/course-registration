@@ -1,0 +1,31 @@
+.section {
+  width: 100%;
+  padding: 1rem;
+  margin-bottom: 2px;
+  display: grid;
+  grid-template-columns: 1fr 2fr 4fr 1fr 1fr;
+  gap: 8px;
+  background: #fff;
+  border-radius: 2px;
+  place-items: center;
+  font-size: 0.8rem;
+}
+
+.section:hover {
+  background: rgb(0, 255, 255);
+}
+
+.section-addBtn {
+  border: none;
+  cursor: pointer;
+  background: transparent;
+}
+
+.fas.fa-plus, .far.fa-edit{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  font-size:1.2rem;
+  width:2rem;
+  height:2rem;
+}

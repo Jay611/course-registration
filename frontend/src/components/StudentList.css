@@ -1,0 +1,110 @@
+.students {
+  max-width: 1300px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+.students-table {
+  width: 100%;
+  margin: 25px 0;
+  font-size: 0.9rem;
+  font-family: sans-serif;
+  border-collapse: collapse;
+  text-align: left;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  border-spacing: 0.5rem;
+}
+
+.students-table thead tr {
+  text-transform: capitalize;
+  background: rgba(103, 168, 243, 0.4);
+}
+
+.students-table th, .students-table td {
+  padding: 12px 15px;
+}
+
+.students-table tbody tr {
+  border-bottom: 1px solid #ddd;
+}
+
+.students-table tbody tr:last-of-type {
+  border-bottom: rgba(103, 168, 243, 0.4);
+}
+
+.students-table tbody tr:hover {
+  background: rgba(0, 174, 255, 0.2);
+}
+
+.modal-backdrop {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.modal-content-wrapper {
+  min-width: 500px;
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  height: fit-content;
+  background: white;
+  margin: 100px auto;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.modal-header{
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.modal-header span{
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.modal-header button {
+  border:none;
+  background:white;
+  cursor: pointer;
+}
+
+.modal-header button i{
+  font-size: 1.6rem;
+}
+
+.modal-body table{
+  width:100%;
+  font-size: 0.9rem;
+  font-family: sans-serif;
+  border-collapse: collapse;
+  text-align: left;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  border-spacing: 0.5rem;
+}
+
+.modal-body table thead tr{
+  text-transform: capitalize;
+  background: rgba(103, 168, 243, 0.4);
+}
+
+.modal-body table th, td {
+  padding: 12px 15px;
+}
+
+.modal-body table tbody tr {
+  border-bottom: 1px solid #ddd;
+}
+
+.modal-body table tbody tr:last-of-type {
+  border-bottom: rgba(103, 168, 243, 0.4);
+}
+
+

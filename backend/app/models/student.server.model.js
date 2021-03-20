@@ -46,9 +46,11 @@ const StudentSchema = new Schema({
     required: true
   },
   courses: [{
-    course:{
+    _id: false,
+    course: {
       type: Schema.Types.ObjectId,
-      ref: 'Course'
+      ref: 'Course',
+      sparse:true
     },
     sectionNumber: Number
   }],
@@ -57,7 +59,7 @@ const StudentSchema = new Schema({
     default: 0
   },
 }, {
-  timestamps:true
+  timestamps: true
 });
 
 // Set the 'fullname' virtual property

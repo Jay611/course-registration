@@ -1,0 +1,19 @@
+.coursescreen{
+  max-width:1300px;
+  margin: 2rem auto;
+  padding:1rem;
+}
+
+
+.coursescreen-createBtn{
+  display: flex;
+  justify-self:flex-start;
+  align-items: center;
+  width: fit-content;
+  cursor: pointer;
+  size:1rem;
+  padding: 0 8px;
+  border:none;
+  background: transparent;
+}
+

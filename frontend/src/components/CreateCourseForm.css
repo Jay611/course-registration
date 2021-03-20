@@ -1,0 +1,38 @@
+.createcourseform-container{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom:1rem;
+}
+
+.createcourseform-item{
+  display:flex;
+  justify-content:space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  gap:8px;
+}
+
+.createcourseform-control{
+  height:2rem;
+  width: 250px;
+  border-radius: 3px;
+  border: 1px solid #171717;
+  padding: 5px;
+}
+
+.createcourseform-button{
+  display:block;
+  margin:auto;
+  padding: 10px 20px;
+  font-Weight: bold;
+  border:3px solid rgba(140, 0, 255, 0.3);
+  border-radius: 5px;
+}
+
+.createcourseform-button:hover{
+  background: rgba(140, 0, 255, 0.3);
+  border:3px solid rgba(140, 0, 255, 0.3);
+
+
+}

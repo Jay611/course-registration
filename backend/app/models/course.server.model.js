@@ -12,6 +12,7 @@ const CourseSchema = new Schema({
     required: 'Course name is required'
   },
   sections: [{
+    _id: false,
     sectionNumber: Number,
     semester: {
       type: String,

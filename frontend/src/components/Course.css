@@ -1,0 +1,56 @@
+.course {
+  width: 100%;
+  padding: 1rem;
+  margin-top: 8px;
+  display: grid;
+  grid-template-columns: 1fr 7fr 1fr;
+  gap: 8px;
+  background: rgba(103, 168, 243, 0.2);
+  border-radius: 2px;
+  place-items: center;
+}
+
+.course:hover {
+  background: rgba(103, 168, 243, 0.6);
+}
+
+.course.course-expand {
+  background: rgba(103, 168, 243, 0.6);
+}
+
+.course-addSectionButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  cursor: pointer;
+  size:1rem;
+  border:none;
+  background: transparent;
+}
+
+.course-expandBtn {
+  border: none;
+  cursor: pointer;
+  background: transparent;
+}
+
+.fas.fa-chevron-down, .fas.fa-chevron-right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+  width: 2rem;
+  height: 2rem;
+}
+
+.sections {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.15s ease-out;
+}
+
+.sections.expand {
+  max-height: 500px;
+  transition: max-height 0.25s ease-in;
+}

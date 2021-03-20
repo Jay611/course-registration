@@ -1,0 +1,30 @@
+.registered-section {
+  width: 100%;
+  padding: 1rem;
+  margin-bottom: 8px;
+  display: grid;
+  grid-template-columns: 1fr 4fr 1fr 1fr 1fr;
+  gap: 8px;
+  background: rgba(255, 0, 0, 0.2);
+  border-radius: 2px;
+  place-items: center;
+}
+
+.registered-section:hover {
+  background: rgba(255, 0, 0, 0.4);
+}
+
+.registered-section-addBtn {
+  border: none;
+  cursor: pointer;
+  background: transparent;
+}
+
+.fas.fa-trash{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  font-size:1.2rem;
+  width:2rem;
+  height:2rem;
+}
