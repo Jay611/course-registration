@@ -11,7 +11,7 @@ import {
 function Section(props) {
   axios.defaults.withCredentials = true
 
-  const { _id, courseCode, courseName, section, sectionButtonType } = props
+  const { _id, courseCode, section, sectionButtonType } = props
 
   const dispatch = useDispatch()
 
@@ -24,7 +24,7 @@ function Section(props) {
     const isExist = registeredCourses.filter(c => c.courseCode === courseCode)
     if (isExist.length > 0) alert('This course already registered')
     else {
-      axios.post('api/courses/sections/addsection', { studentId: student._id, courseCode, sectionNumber: section.sectionNumber })
+      axios.post('api/courses/sections/addsection', { studentId: student._id, courseCode, semester: section.semester, sectionNumber: section.sectionNumber })
         .then(() => dispatch(updateMyCourse(student._id)))
     }
   }

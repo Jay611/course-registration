@@ -5,14 +5,11 @@ import { useDispatch } from 'react-redux'
 // Components
 import StudentList from '../components/StudentList'
 
-// Actions
-import { getStudent } from '../redux/actions/studentActions'
-
 function StudentsScreen(props) {
   const dispatch = useDispatch()
   
   useEffect(() => {
-    dispatch(getStudent())
+    // dispatch(getStudent())
   }, [dispatch])
 
   return (

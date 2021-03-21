@@ -5,7 +5,7 @@ const Student = require('mongoose').model('Student')
 exports.getCourses = async (req, res) => {
   try {
     const courses = await Course.find()
-    res.json(courses)
+    return res.status(200).json(courses)
   } catch (err) {
     return res.status(500).json({ err: err.message })
   }
@@ -21,7 +21,7 @@ exports.createCourse = async (req, res) => {
 
     const newCourse = new Course(req.body)
     await newCourse.save()
-    res.json({ msg: 'created new course' })
+    return res.status(200).json({ msg: 'created new course' })
   } catch (err) {
     return res.status(500).json({ err: err.message })
   }
@@ -35,7 +35,7 @@ exports.updateCourse = async (req, res) => {
 
     await Course.findByIdAndUpdate(req.params.id, req.body)
 
-    res.json({ msg: 'updated new section' })
+    return res.status(200).json({ msg: 'updated new section' })
   } catch (err) {
     return res.status(500).json({ err: err.message })
   }
@@ -45,7 +45,7 @@ exports.deleteCourse = async (req, res) => {
   try {
     await Course.findByIdAndDelete(req.params.id)
 
-    res.json({ msg: 'deleted new section' })
+    return res.status(200).json({ msg: 'deleted new section' })
   } catch (err) {
     return res.status(500).json({ err: err.message })
   }
@@ -57,16 +57,22 @@ exports.getCourseByStudent = async (req, res) => {
       if (student && student.courses.length !== 0) {
         Promise.all(
           student.courses.map(async (course) => {
-            
+
             const c = (await Course.findById(course.course)).toObject()
-            c.sectionNumber = course.sectionNumber
-            return c
+            const section = c.sections.filter(s => s.semester === course.semester && s.sectionNumber === course.sectionNumber)[0]
+            delete section.students
+            const result = {
+              courseCode: c.courseCode,
+              courseName: c.courseName,
+              section: section
+            }
+            return result
           })
-          ).then(results => {
-          res.status(200).json(results)
+        ).then(results => {
+          return res.status(200).json(results)
         })
-      } else{
-        res.status(200).json([])
+      } else {
+        return res.status(200).json([])
       }
     })
   } catch (err) {
@@ -74,16 +80,16 @@ exports.getCourseByStudent = async (req, res) => {
   }
 }
 
-exports.getStudentsByCourse = async(req, res) => {
+exports.getStudentsByCourse = async (req, res) => {
   try {
-    const {courseId, semester, sectionNumber} = req.body
+    const { courseId, semester, sectionNumber } = req.body
 
     const course = await Course.findById(courseId)
 
     const section = course.sections.filter(s => s.semester == semester && s.sectionNumber === sectionNumber)[0]
 
     Promise.all(
-      section.students.map(async(student) => await Student.findById(student))
+      section.students.map(async (student) => await Student.findById(student))
     ).then(results => {
       return res.status(200).json(results)
     })
@@ -107,7 +113,7 @@ exports.createSection = async (req, res) => {
     course.sections.push(section)
     course.save()
 
-    res.json({ msg: 'created new section' })
+    return res.status(200).json({ msg: 'created new section' })
 
   } catch (err) {
     return res.status(500).json({ err: err.message })
@@ -130,20 +136,7 @@ exports.updateSection = async (req, res) => {
 
     course.sections.update(updateSection)
 
-
-    // existSection.sectionNumber = updateSection.sectionNumber
-    // existSection.semester = updateSection.semester
-    // existSection.professor = updateSection.professor
-    // existSection.classHour[0].dayOfWeek = updateSection.classHour[0].dayOfWeek
-    // existSection.classHour[0].startTime.hour = updateSection.classHour[0].startTime.hour
-    // existSection.classHour[0].startTime.minute = updateSection.classHour[0].startTime.minute
-    // existSection.classHour[0].endTime.hour = updateSection.classHour[0].endTime.hour
-    // existSection.classHour[0].endTime.minute = updateSection.classHour[0].endTime.minute
-    // existSection.students = updateSection.students
-
-    // res.json(existSection)
-
-    res.json(course)
+    return res.status(200).json(course)
     // res.json({ msg: 'updated new section' })
 
   } catch (err) {
@@ -153,9 +146,7 @@ exports.updateSection = async (req, res) => {
 
 exports.deleteSection = async (req, res) => {
   try {
-
-
-    res.json({ msg: 'created new section' })
+    return res.status(200).json({ msg: 'created new section' })
 
   } catch (err) {
     return res.status(500).json({ err: err.message })
@@ -166,35 +157,41 @@ exports.deleteSection = async (req, res) => {
 // Add section to Student
 exports.addCourseToStudent = async (req, res) => {
   try {
-    const { studentId, courseCode, sectionNumber } = req.body
+    const { studentId, courseCode, semester, sectionNumber } = req.body
     const student = await Student.findById(studentId)
     const course = await Course.findOne({ courseCode })
-
-    student.courses.push({ course, sectionNumber })
+    // Add course to student
+    student.courses.push({ course, semester, sectionNumber })
     student.save()
-
-    course.sections.filter(section => section.sectionNumber === sectionNumber)[0].students.push(student)
+    // Add student to course
+    course.sections.filter(section => section.sectionNumber === sectionNumber && section.semester === semester)[0].students.push(student)
     course.save()
-    res.json({ msg: 'added new section' })
+    return res.status(200).json({ msg: 'added new section' })
 
   } catch (err) {
     return res.status(500).json({ err: err.message })
   }
 }
 
-exports.deleteSectionFromStudent = async(req, res) => {
+exports.deleteSectionFromStudent = async (req, res) => {
   try {
-    const { studentId, courseCode, sectionNumber } = req.body
+    const { studentId, courseCode, semester, sectionNumber } = req.body
     const student = await Student.findById(studentId)
     const course = await Course.findOne({ courseCode })
-    student.courses.pop({ course, sectionNumber })
+    console.log(req.body)
+
+    //remove course from student
+    student.courses = student.courses.filter(c => !c.course.equals(course._id) || c.semester !== semester || c.sectionNumber !== sectionNumber)
+    console.log(student.courses)
     student.save()
-    course.sections.filter(section => section.sectionNumber === sectionNumber)[0].students.pop(student)
+    //remove student from course
+    section = course.sections.filter(section => section.semester === semester && section.sectionNumber === sectionNumber)[0]
+    section.students = section.students.filter(s => !s.equals(student._id))
     course.save()
 
-    return res.status(200).json({msg: 'Delete section from student'})
+    return res.status(200).json({ msg: 'Delete section from student' })
   } catch (err) {
     return res.status(500).json({ err: err.message })
-    
+
   }
 }

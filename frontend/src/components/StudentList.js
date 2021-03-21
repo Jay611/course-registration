@@ -8,7 +8,7 @@ function Student({ students }) {
 
   const [isOpen, setIsOpen] = useState(false)
   const [courses, setCourses] = useState([])
-
+  const [selectedStudent, setSelectedStudent] = useState('')
   const [allStudents, setAllStudents] = useState([])
 
   useEffect(() => {
@@ -21,20 +21,17 @@ function Student({ students }) {
     }
   }, [students])
 
-  const onDoubleClickHandler = (studentId) => e => {
+  const onDoubleClickHandler = (student) => e => {
     e.preventDefault()
     setIsOpen(true)
-    axios.get('http://localhost:5000/api/courses/mycourse/' + studentId)
+    setSelectedStudent(student.fullName)
+    axios.get('http://localhost:5000/api/courses/mycourse/' + student._id)
       .then(({ data }) => {
         setCourses(data)
       })
       .catch(err => {
         // if (err.response.data.msg) alert(err.response.data.msg)
       })
-  }
-
-  const findSection = (course) => {
-    return (course.sections.filter(x => x.sectionNumber === course.sectionNumber)[0])
   }
 
   return (
@@ -53,7 +50,7 @@ function Student({ students }) {
           </thead>
           <tbody>
             {allStudents.map(student => (
-              <tr key={student._id} onDoubleClick={onDoubleClickHandler(student._id)}>
+              <tr key={student._id} onDoubleClick={onDoubleClickHandler(student)}>
                 <td>{student.studentNumber}</td>
                 <td>{student.program}</td>
                 <td>{student.firstName}</td>
@@ -70,7 +67,7 @@ function Student({ students }) {
           <div className="modal-content-wrapper">
             <div className="modal-content">
               <div className="modal-header">
-                <span>Courses</span>
+                <span>{selectedStudent}</span>
                 <button onClick={() => setIsOpen(false)}>
                   <i className="fas fa-times"></i>
                 </button>
@@ -89,17 +86,16 @@ function Student({ students }) {
                     </thead>
                     <tbody>
                     {courses.map(course => {
-                      const section = findSection(course)
                       return (
-                          <tr key={course._id}>
+                          <tr key={`${course.courseCode}`}>
                             <td>{course.courseCode}</td>
                             <td>{course.courseName}</td>
-                            <td>{section.semester}</td>
-                            <td>Sec {course.sectionNumber.toLocaleString('en-US', {
+                            <td>{course.section.semester}</td>
+                            <td>Sec {course.section.sectionNumber.toLocaleString('en-US', {
                               minimumIntegerDigits: 3,
                               useGrouping: false
                             })}</td>
-                            <td>{section.professor}</td>
+                            <td>{course.section.professor}</td>
                           </tr>
                       )
                     })}

@@ -7,7 +7,6 @@ import Course from '../components/Course'
 import RegisteredSection from '../components/RegisteredSection'
 
 // Actions
-import { getStudent } from '../redux/actions/studentActions'
 import {
   getCourses as listCourses,
   updateMyCourse
@@ -21,67 +20,66 @@ function RegistrationScreen() {
   const getCourses = useSelector(state => state.getCourses)
   const { loading, courses, error } = getCourses
 
-
   const student = useSelector(state => state.student)
-  const { profile } = student
+  const { profile_loading, profile } = student
 
   const myCourses = useSelector(state => state.myCourses)
   const { mycourse_loading, registeredCourses, mycourse_error } = myCourses
 
-  if (!profile) window.location.href = '/login'
-
   useEffect(() => {
     dispatch(listCourses())
-    dispatch(getStudent())
   }, [dispatch])
 
   useEffect(() => {
-    if (profile._id) {
+    if (profile) {
       dispatch(updateMyCourse(profile._id))
     }
-  }, [dispatch, profile._id])
+  }, [dispatch, profile])
 
   return (
     <>
-      <div className="registrationscreen">
-        <div className="registrationscreen-left">
-          <h2>Courses</h2>
-          {loading || profile.loading ?
-            <p>Loading...</p>
-            : error ?
-              <h2>{error}</h2> :
-              courses.length === 0 ?
-                <p>No course exists</p>
-                : courses.map((course) => (
-                  <Course
-                    key={course._id}
-                    course={course}
-                    sectionButtonType="ADD"
-                  />
-                ))
-          }
-        </div>
+      {!profile_loading ? (
+        <div className="registrationscreen">
+          <div className="registrationscreen-left">
+            <h2>Courses</h2>
+            {loading ?
+              <p>Loading...</p>
+              : error ?
+                <h2>{error}</h2> :
+                courses.length === 0 ?
+                  <p>No course exists</p>
+                  : courses.map((course) => (
+                    <Course
+                      key={course._id}
+                      course={course}
+                      sectionButtonType="ADD"
+                    />
+                  ))
+            }
+          </div>
 
-        <div className="registrationscreen-right">
-          <h2>My Courses</h2>
-          {mycourse_loading || profile.loading ? (
-            <p>Loading...</p>
-          ) : (mycourse_error ? (
-            <h2>{mycourse_error}</h2>
-          ) : (
-            registeredCourses && registeredCourses.length > 0 ? registeredCourses.map((course) => (
-              <RegisteredSection key={`${course._id}-${course.sectionNumber}`} course={course} />
-            )) : (
-              <div>
-                There is no course.
-              </div>
+          <div className="registrationscreen-right">
+            <h2>My Courses</h2>
+            {mycourse_loading ? (
+              <p>Loading...</p>
+            ) : (mycourse_error ? (
+              <h2>{mycourse_error}</h2>
+            ) : (
+              registeredCourses && registeredCourses.length > 0 ? registeredCourses.map((course) => (
+                <RegisteredSection key={`${course._id}-${course.sectionNumber}`} course={course} />
+              )) : (
+                <div>
+                  There is no course.
+                </div>
+              )
             )
-          )
-          )}
-
+            )}
+          </div>
         </div>
+      ) : (
+        <p>Profile Loading...</p>
+      )}
 
-      </div>
     </>
 
 

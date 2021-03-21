@@ -1,20 +1,10 @@
 import './HomeScreen.css'
-import { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-
-// Actions
-import { getStudent } from '../redux/actions/studentActions'
 
 function HomeScreen() {
-  const dispatch = useDispatch()
-  
-  useEffect(() => {
-    dispatch(getStudent())
-  }, [dispatch])
-  
+
   return (
-    <div className="homescreen">
-      HomeScreen
+    <div className="homescreen-conatiner">
+      <h2>Welcome to course registration.</h2>
     </div>
   )
 }

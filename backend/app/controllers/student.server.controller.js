@@ -57,7 +57,7 @@ exports.register = async (req, res) => {
 
     newStudent.save()
 
-    res.json(newStudent)
+    return res.status(200).json(newStudent)
 
   } catch (err) {
     return res.status(500).json({ msg: err.message })
@@ -80,7 +80,7 @@ exports.login = async (req, res) => {
 
     res.cookie('token', token, { maxAge: jwtExpirySeconds * 1000, httpOnly: true });
 
-    res.json({ token })
+    return res.status(200).json({ token })
 
   } catch (err) {
     return res.status(500).json({ msg: err.message })
@@ -105,7 +105,7 @@ exports.isSignedIn = (req, res) => {
     jwt.verify(token, jwtKey, (err, student) => {
       if (err) return res.status(400).json({ msg: "Please Login or Register" })
 
-      res.json({ student })
+      return res.status(200).json({ student })
     })
   } catch (err) {
     return res.status(500).json({ msg: err.message })
@@ -115,7 +115,7 @@ exports.isSignedIn = (req, res) => {
 exports.getStudent = async (req, res) => {
   try {
     const student = await Student.findById(req.student.id).select("-password")
-    res.json(student)
+    return res.status(200).json(student)
   } catch (err) {
     return res.status(500).json({ msg: err.message })
   }

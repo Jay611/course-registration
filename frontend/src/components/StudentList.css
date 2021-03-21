@@ -26,6 +26,7 @@
 
 .students-table tbody tr {
   border-bottom: 1px solid #ddd;
+  cursor: pointer;
 }
 
 .students-table tbody tr:last-of-type {
@@ -57,31 +58,31 @@
   border-radius: 5px;
 }
 
-.modal-header{
-  display:flex;
+.modal-header {
+  display: flex;
   justify-content: space-between;
   align-items: center;
   height: 50px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
-.modal-header span{
+.modal-header span {
   font-size: 1.6rem;
   font-weight: 600;
 }
 
 .modal-header button {
-  border:none;
-  background:white;
+  border: none;
+  background: white;
   cursor: pointer;
 }
 
-.modal-header button i{
+.modal-header button i {
   font-size: 1.6rem;
 }
 
-.modal-body table{
-  width:100%;
+.modal-body table {
+  width: 100%;
   font-size: 0.9rem;
   font-family: sans-serif;
   border-collapse: collapse;
@@ -90,7 +91,7 @@
   border-spacing: 0.5rem;
 }
 
-.modal-body table thead tr{
+.modal-body table thead tr {
   text-transform: capitalize;
   background: rgba(103, 168, 243, 0.4);
 }
@@ -106,5 +107,3 @@
 .modal-body table tbody tr:last-of-type {
   border-bottom: rgba(103, 168, 243, 0.4);
 }
-
-

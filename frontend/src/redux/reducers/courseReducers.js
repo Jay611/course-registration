@@ -24,7 +24,7 @@ export const getCoursesReducer = (state = { courses: [] }, action) => {
   }
 }
 
-export const updateCourseReducer = (state = { registeredCourses: [] }, action) => {
+export const updateMyCourseReducer = (state = { registeredCourses: [] }, action) => {
   switch (action.type) {
 
     case actionTypes.UPDATE_MYCOURSE_REQUEST:
@@ -42,6 +42,12 @@ export const updateCourseReducer = (state = { registeredCourses: [] }, action) =
         mycourse_loading: false,
         registeredCourses: [],
         mycourse_error: action.payload
+      }
+
+    case actionTypes.STUDENT_LOGOUT_SUCCESS:
+      return {
+        mycourse_loading: false,
+        registeredCourses: [],
       }
 
     default:

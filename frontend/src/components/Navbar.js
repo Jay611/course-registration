@@ -1,11 +1,11 @@
 import './Navbar.css';
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link, withRouter } from 'react-router-dom'
 import axios from 'axios';
 
 // Actions
-import { logout } from '../redux/actions/studentActions'
+import { getStudent, logout } from '../redux/actions/studentActions'
 
 const Navbar = (props) => {
   axios.defaults.withCredentials = true
@@ -15,6 +15,10 @@ const Navbar = (props) => {
   const profile = useSelector(state => state.student.profile)
 
   const [click, setClick] = useState(false)
+
+  useEffect(() => {
+    dispatch(getStudent())
+  }, [dispatch])
 
   const handleClick = () => {
     setClick(!click)
@@ -66,14 +70,16 @@ const Navbar = (props) => {
         )}
 
         {profile && !click ? (
-          <>
-            <li className="navbar-fullname" >
-              <span>{profile.firstName}</span>
-            </li>
-            <li>
-              <span className="navbar-link-button" onClick={logoutHandler}>Log Out</span>
-            </li>
-          </>
+          <li className="navbar-fullname" >
+            <span>{profile.firstName}</span>
+          </li>
+        ) : null
+        }
+
+        {profile ? (
+          <li>
+            <span className="navbar-link-button" onClick={logoutHandler}>Log Out</span>
+          </li>
         ) : (
           <li>
             <Link to='/login' className="navbar-link" onClick={closeMobileMenu}>

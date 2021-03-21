@@ -49,9 +49,9 @@ const StudentSchema = new Schema({
     _id: false,
     course: {
       type: Schema.Types.ObjectId,
-      ref: 'Course',
-      sparse:true
+      ref: 'Course'
     },
+    semester: String,
     sectionNumber: Number
   }],
   role: {

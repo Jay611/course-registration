@@ -8,13 +8,13 @@ import {
 } from './reducers/studentReducers'
 import {
   getCoursesReducer,
-  updateCourseReducer
+  updateMyCourseReducer
 } from './reducers/courseReducers'
 
 const reducer = combineReducers({
   student: getStudentReducer,
   getCourses: getCoursesReducer,
-  myCourses: updateCourseReducer
+  myCourses: updateMyCourseReducer
 })
 
 const middleware = [thunk]
@@ -22,18 +22,9 @@ const middleware = [thunk]
 // const profileFromLocalStorage = localStorage.getItem('profile') ?
 //   JSON.parse(localStorage.getItem('profile')) : []
 
-const INITIAL_STATE = {
-  student: {
-    // profile: profileFromLocalStorage
-  },
-  getCourses:{
-    courses: []
-  }
-}
 
 const store = createStore(
   reducer,
-  // INITIAL_STATE,
   composeWithDevTools(applyMiddleware(...middleware))
 )
 

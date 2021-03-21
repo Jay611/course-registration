@@ -6,8 +6,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import Course from '../components/Course'
 import CreateCourseForm from '../components/CreateCourseForm'
 
-// Actions
-import { getStudent } from '../redux/actions/studentActions'
 import {
   getCourses as listCourses,
 } from '../redux/actions/courseActions'
@@ -22,7 +20,7 @@ function CoursesScreen() {
 
   useEffect(() => {
     dispatch(listCourses())
-    dispatch(getStudent())
+    // dispatch(getStudent())
   }, [dispatch])
 
   const createCourseFormShowHandler = () => {

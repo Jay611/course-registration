@@ -4,6 +4,8 @@ import axios from 'axios'
 export const getStudent = () => (dispatch, getState) => {
   axios.defaults.withCredentials = true
 
+  dispatch({ type: actionTypes.GET_STUDENT_REQUEST })
+
   axios.get('http://localhost:5000/api/students/studentinfo')
   .then(({data}) => {
     dispatch({
@@ -13,11 +15,15 @@ export const getStudent = () => (dispatch, getState) => {
   })
   .catch(err => {
     if (err.response.data.msg) {
-      alert(err.response.data.msg);
-    } else{
+      // alert(err.response.data.msg);
       dispatch({
         type: actionTypes.GET_STUDENT_FAIL,
         payload: err.response.data.msg
+      })
+    } else{
+      dispatch({
+        type: actionTypes.GET_STUDENT_FAIL,
+        payload: 'GET STUDENT FAIL'
       })
     }
   })
